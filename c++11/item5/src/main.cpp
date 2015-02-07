@@ -5,8 +5,12 @@
 class Dog {
 public:
 	int age;
-	int weight;
-	Dog(int a, int w):age(a), weight(w) {};
+	Dog(int a):age(a) {};
+
+	Dog( const Dog &obj) {
+		this->age = obj.age;
+		std::cout << "Dog copy constructor, age: " << obj.age << std::endl;
+	}
 	
 	bool operator==(const Dog& other) const {
 		return (age == other.age);
@@ -25,31 +29,27 @@ namespace std {
 
 int main(int argc, char** argv) {
 	std::unordered_map<Dog, std::string> m = { 
-		{ {3, 10}, "Ann" },
-		{ {4, 11}, "Lucy" },
-		{ {5, 15}, "Dave" },
-		{ {6, 20}, "Mike" }
+		{ {3}, "Ann" },
+		{ {4}, "Lucy" },
+		{ {5}, "Dave" },
+		{ {6}, "Mike" }
 	};
 
-	//for (std::pair<Dog, std::string>& i : m) 
-	//	do something ;;; 
-	//
-	//error: invalid initialization of reference of type ‘std::pair<Dog, std::basic_string<char> >&’ from expression of type ‘std::pair<const Dog, std::basic_string<char> >’
+	std::cout << "const pair<Dog, >" << std::endl;
+	for (const std::pair<Dog, std::string>& i : m)  { // copy constructor is called. 
+		std::cout << "age: " << i.first.age << " best friend: " << i.second << std::endl;
+	}
 
-	for (std::pair<const Dog, std::string>& i : m) 
-		std::cout << "age: " << i.first.age << ", weight: " << i.first.weight << " best friend: " << i.second << std::endl;
-
-	for (auto& i : m) 
+	std::cout << "pair<const Dog, >" << std::endl;
+	for (std::pair<const Dog, std::string>& i : m)  { // copy constructor isn't called.
+		std::cout << "age: " << i.first.age << " best friend: " << i.second << std::endl;
 		(&i)->second = "haha";
+	}
 
-	for (auto& i : m) 
-		std::cout << "age: " << i.first.age << ", weight: " << i.first.weight << " best friend: " << i.second << std::endl;
-
-	for (std::pair<const Dog, std::string>& i : m) 
-		(&i)->second = "hoho";
-
-	for (auto& i : m) 
-		std::cout << "age: " << i.first.age << ", weight: " << i.first.weight << " best friend: " << i.second << std::endl;
+	std::cout << "auto " << std::endl;
+	for (auto& i : m) { // copy constructor isn't called.
+		std::cout << "age: " << i.first.age << " best friend: " << i.second << std::endl;
+	}
 
 	std::unordered_map<std::string, std::string> ms = {
 		{"aaa", "11111"},
