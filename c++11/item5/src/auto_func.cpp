@@ -16,6 +16,10 @@ public:
 	}
 };
 
+// TODO 
+// 서로 다른 타입을 리턴하는 함수를 만들 수 있나 ?? 
+// closure 를 auto로 받을 때 메모리 사용량. std::function으로 받을 때 메모리 사용량을 확인할 수 있는 예제를 만들자. 
+
 int main() {
 #if 1
 	auto addFunc = [](const Number& p1, const Number& p2, Number& result) { 
