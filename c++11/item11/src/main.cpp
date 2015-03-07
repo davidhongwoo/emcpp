@@ -18,6 +18,12 @@ private:
 	int m_a;
 };
 
+bool isLucky(int number) { return number == 10; }
+
+bool isHappy(int n) { return n > 0; }
+bool isHappy(char) = delete;
+bool isHappy(double) = delete;
+
 int main() {
 	Widget w0(0);
 
@@ -31,8 +37,21 @@ int main() {
 #endif
 
 	Dog d0(0);
+#if 0
 	Dog d1(d0); 	// main.cpp:34: undefined reference to `Dog::Dog(Dog const&)'
 	Dog d2(2);	
 	d2 = d0;		// main.cpp:36: undefined reference to `Dog::operator=(Dog const&)'
+#endif 
+
+	isLucky(10);
+	isLucky('a');
+	isLucky(3.4);	// warning: implicit conversion from 'double' to 'int' changes value from 3.4 to 3
+
+	isHappy(0);
+#if 0
+	isHappy('b');	// error: call to deleted function 'isHappy'
+	isHappy(4.3);	// error: call to deleted function 'isHappy'
+#endif
+
 	return 0;
 }
