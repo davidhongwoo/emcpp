@@ -24,6 +24,14 @@ bool isHappy(int n) { return n > 0; }
 bool isHappy(char) = delete;
 bool isHappy(double) = delete;
 
+template <typename T>
+bool isTrue(T a) = delete;
+
+bool isTrue(int a) { return a != 0; }
+
+bool isP(int& a) { return true; }
+bool isP(const int& a) = delete;
+
 int main() {
 	Widget w0(0);
 
@@ -52,6 +60,13 @@ int main() {
 	isHappy('b');	// error: call to deleted function 'isHappy'
 	isHappy(4.3);	// error: call to deleted function 'isHappy'
 #endif
+
+	//isTrue('a');
+	isTrue(1);
+
+	isP(1);
+	int a = 1;
+	isP(a);
 
 	return 0;
 }
