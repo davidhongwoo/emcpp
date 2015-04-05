@@ -14,10 +14,23 @@ private:
 	std::string name;
 };
 
+class Widget2 {
+public:
+	void setName(const std::string& newName) {
+		name = newName;
+	}
+	void setName(std::string&& newName) {
+		name = std::move(newName);
+	}
+private:
+	std::string name;
+};
+
 int main() {
 	Widget w;;
 	auto name = std::string("haha");
 	w.setName(name);
+	// unknown behavior 
 	std::cout << "n: " << name << std::endl;
 	return 0;
 }
